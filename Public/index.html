@@ -1,18 +1,107 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Roblox Checker</title>
-  <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <title>Roblox User Checker</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    body {
+      font-family: "Poppins", sans-serif;
+      background: linear-gradient(135deg, #0a8bff, #00ffb3);
+      color: white;
+      text-align: center;
+      min-height: 100vh;
+      margin: 0;
+      padding: 40px 10px;
+    }
+
+    h2 {
+      font-size: 2.2em;
+      margin-bottom: 20px;
+      text-shadow: 0 2px 10px rgba(0,0,0,0.3);
+    }
+
+    input {
+      padding: 10px 15px;
+      border-radius: 8px;
+      border: none;
+      outline: none;
+      font-size: 16px;
+      width: 240px;
+      margin-right: 10px;
+      box-shadow: 0 0 10px rgba(255,255,255,0.3);
+    }
+
+    button {
+      padding: 10px 18px;
+      font-size: 16px;
+      border-radius: 8px;
+      border: none;
+      background: #00ffb3;
+      color: #003d6b;
+      font-weight: bold;
+      cursor: pointer;
+      transition: 0.3s;
+      box-shadow: 0 0 15px rgba(0,255,179,0.5);
+    }
+
+    button:hover {
+      transform: scale(1.05);
+      background: #0affd8;
+      box-shadow: 0 0 25px rgba(0,255,200,0.8);
+    }
+
+    .card {
+      margin-top: 25px;
+      padding: 25px;
+      border-radius: 16px;
+      display: inline-block;
+      background: rgba(255,255,255,0.15);
+      backdrop-filter: blur(8px);
+      box-shadow: 0 0 30px rgba(0,0,0,0.3);
+      transition: 0.3s;
+      animation: fadeIn 0.7s ease;
+    }
+
+    .card:hover {
+      transform: scale(1.03);
+      box-shadow: 0 0 35px rgba(0,255,200,0.8);
+    }
+
+    img {
+      border-radius: 10px;
+      width: 150px;
+      margin-top: 10px;
+      box-shadow: 0 0 15px rgba(0,255,179,0.6);
+    }
+
+    a {
+      display: inline-block;
+      margin-top: 10px;
+      color: #00ffb3;
+      text-decoration: none;
+      font-weight: bold;
+      transition: 0.3s;
+    }
+
+    a:hover {
+      color: #ffffff;
+      text-shadow: 0 0 10px white;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
 </head>
 <body>
-  <div class="container">
-    <h1>🔍 Roblox Checker</h1>
-    <input type="text" id="username" placeholder="Nhập username Roblox...">
-    <button onclick="checkUser()">Kiểm tra</button>
-    <div id="result"></div>
-  </div>
-  <script src="script.js"></script>
+  <h2>💚 Roblox User Checker</h2>
+  <input id="username" placeholder="Nhập username Roblox...">
+  <button onclick="check()">Kiểm tra</button>
+
+  <div id="result"></div>
+
+  <script src="app.js"></script>
 </body>
 </html>

@@ -1,7 +1,7 @@
 {
-  "name": "roblox-checker",
+  "name": "roblox-checker1",
   "version": "1.0.0",
-  "description": "Web kiểm tra thông tin Roblox (hiển thị avatar, mô tả, group...)",
+  "description": "Web kiểm tra thông tin Roblox",
   "main": "server.js",
   "type": "module",
   "scripts": {
@@ -11,6 +11,7 @@
   "license": "MIT",
   "dependencies": {
     "express": "^4.19.0",
-    "node-fetch": "^3.3.2"
+    "node-fetch": "^3.3.2",
+    "cors": "^2.8.5"
   }
 }

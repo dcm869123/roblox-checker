@@ -1,50 +1,58 @@
 import express from "express";
-import fetch from "node-fetch";
-import path from "path";
-import { fileURLToPath } from "url";
-
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
+import fetch from "node-fetch"; 
+import cors from "cors";
 
 const app = express();
-app.use(express.static(path.join(__dirname, "public")));
+app.use(cors());
 app.use(express.json());
+app.use(express.static("public"));
 
-// API chính
+// API check user Roblox
 app.get("/api/user/:username", async (req, res) => {
   try {
-    const { username } = req.params;
-    const userRes = await fetch(`https://api.roblox.com/users/get-by-username?username=${username}`);
-    const userData = await userRes.json();
+    const username = req.params.username;
 
-    if (!userData.Id) return res.status(404).json({ error: "Không tìm thấy user!" });
+    // Lấy ID từ username
+    const userResp = await fetch("https://users.roblox.com/v1/usernames/users", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ usernames: [username], excludeBannedUsers: true }),
+    });
+    const userData = await userResp.json();
 
-    // Lấy thêm thông tin chi tiết & group
-    const [detailsRes, groupsRes, avatarRes] = await Promise.all([
-      fetch(`https://users.roblox.com/v1/users/${userData.Id}`),
-      fetch(`https://groups.roblox.com/v2/users/${userData.Id}/groups/roles`),
-      fetch(`https://thumbnails.roblox.com/v1/users/avatar-headshot?userIds=${userData.Id}&size=150x150&format=Png&isCircular=false`)
-    ]);
+    if (!userData.data || userData.data.length === 0) {
+      return res.status(404).json({ error: "Không tìm thấy người dùng Roblox này!" });
+    }
 
-    const details = await detailsRes.json();
-    const groupsData = await groupsRes.json();
-    const avatarData = await avatarRes.json();
+    const user = userData.data[0];
+    const userId = user.id;
+
+    // Avatar Roblox
+    const thumbURL = `https://thumbnails.roblox.com/v1/users/avatar-headshot?userIds=${userId}&size=420x420&format=Png&isCircular=false`;
+    const thumbResp = await fetch(thumbURL);
+    const thumbJson = await thumbResp.json();
+    const avatar = thumbJson.data?.[0]?.imageUrl || null;
+
+    // Thông tin cơ bản (description, created time)
+    const detailResp = await fetch(`https://users.roblox.com/v1/users/${userId}`);
+    const detailJson = await detailResp.json();
 
     res.json({
-      id: userData.Id,
-      name: userData.Username,
-      displayName: details.displayName,
-      description: details.description || "",
-      created: details.created || "",
-      avatar: avatarData.data?.[0]?.imageUrl || "",
-      groups: groupsData.data || []
+      id: userId,
+      username: user.name,
+      displayName: user.displayName,
+      description: detailJson.description || "Không có mô tả",
+      created: detailJson.created,
+      avatar,
+      link: `https://www.roblox.com/users/${userId}/profile`
     });
 
   } catch (err) {
-    console.error("❌ SERVER ERROR:", err);
-    res.status(500).json({ error: "❌ Lỗi server!" });
+    console.error(err);
+    res.status(500).json({ error: "Lỗi server!", details: err.message });
   }
 });
 
+// Railway cần PORT này để chạy
 const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => console.log(`✅ Server đang chạy tại http://localhost:${PORT}`));
+app.listen(PORT, () => console.log(`✅ Server đang chạy: http://localhost:${PORT}`));

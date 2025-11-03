@@ -1,0 +1,79 @@
+body {
+  background: #0d1117;
+  color: #fff;
+  font-family: 'Poppins', sans-serif;
+  text-align: center;
+  margin: 0;
+  padding: 0;
+}
+
+.container {
+  margin-top: 100px;
+}
+
+input {
+  padding: 10px;
+  width: 250px;
+  border-radius: 8px;
+  border: none;
+  outline: none;
+}
+
+button {
+  background-color: #5865f2;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 8px;
+  cursor: pointer;
+  margin-left: 10px;
+  transition: 0.2s;
+}
+button:hover {
+  background-color: #4752c4;
+}
+
+.card {
+  background-color: #161b22;
+  border: 1px solid #30363d;
+  border-radius: 10px;
+  padding: 20px;
+  width: 350px;
+  margin: 30px auto;
+  box-shadow: 0 0 15px rgba(0,0,0,0.3);
+  transition: transform 0.2s;
+}
+.card:hover {
+  transform: scale(1.03);
+}
+
+.avatar {
+  border-radius: 50%;
+  width: 100px;
+  margin-bottom: 10px;
+}
+
+.groups {
+  margin-top: 20px;
+  text-align: left;
+}
+
+.group-item {
+  background-color: #1c2128;
+  padding: 10px;
+  border-radius: 6px;
+  margin-bottom: 8px;
+  transition: 0.2s;
+}
+.group-item:hover {
+  background-color: #21262d;
+}
+
+.group-item a {
+  color: #58a6ff;
+  text-decoration: none;
+  font-weight: 500;
+}
+.group-item a:hover {
+  text-decoration: underline;
+}
